@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
       url: jdbc:mysql://127.0.0.1:3306/books?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
-      username: books
-      password: books
+      username: root
+      password: test123456
 #      url: jdbc:mysql://127.0.0.1:3306/books?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
 #      username: root
 #      password: test123456
@@ -39,8 +39,23 @@ spring:
           port: 465
           class: javax.net.ssl.SSLSocketFactory
           fallback: false
+  profiles:
+    include: crawl,website
 
 
+
+
+
+
+  resources:
+    cache:
+      # 资源缓存时间，单位秒
+      period: 604800
+    # 开启gzip压缩
+    chain:
+      gzipped: true
+      # 启用缓存
+      cache: true
 
 
 #  mvc:
@@ -52,6 +67,8 @@ mybatis:
 
 #首页本站推荐小说配置
 index:
+  pageLocation: /www/novel-front #首页静态化保存路径
+  template: v2
   recBooks:
     - {bookName: 惊悚乐园,bookAuthor: 三天两觉}
     - {bookName: 最强装逼打脸系统,bookAuthor: 太上布衣}
@@ -62,14 +79,27 @@ index:
 mysql:
   charset: utf8mb4
 
-#爬取小说数据的最低评分
 books:
+  #爬取小说数据的最低评分
   lowestScore: 6.0
+  #小说的更新间隔（分）
+  updatePeriod: 1
+  #爬取小说数量
+  maxNum: 300000
 
-#爬取的网站名称类型 1：笔趣岛 ，2：笔趣塔  更多网站解析中，敬请期待
+#爬取的网站名称类型 1：笔趣岛 ，2：笔趣塔,3:顶点小说 ，4：百书斋,6: 笔趣窝 更多网站解析中，敬请期待
 crawl:
   website:
-    type: 1
+    type: 6
+
+
+
+
+pic:
+  save:
+    type: 2 #图片保存方式, 1不保存，使用网络图片 ，2本地保存
+    path: /var/pic  #图片保存路径
+
 
 search:
   schedule:

@@ -35,16 +35,22 @@ public interface BookMapper {
 
     void addVisitCount(@Param("bookId") Long bookId);
 
-    Book queryRandomBook();
 
-    Book queryNewstBook(Set<Long> sendIds);
-
-    List<String> queryNewstBookIdList();
-
-    List<String> queryEndBookIdList();
 
     /**
      * 查询推荐书籍数据
      * */
     List<Book> queryRecBooks(List<Map<String, String>> configMap);
+
+    /**
+     * 清理无效书籍(1个月前更新的无章节书籍)
+     * */
+    void clearInvilidBook();
+
+    /**
+     * 查询网络图片的小说
+     *
+     * @param limit
+     * @param offset*/
+    List<Book> queryNetworkPicBooks(@Param("limit") Integer limit,@Param("offset") Integer offset);
 }
